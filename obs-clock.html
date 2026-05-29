@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OBS Clock</title>
+  <style>
+    #output {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 25px;
+      text-align: center;
+      color: white;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.95); /* To hide the box in OBS completely, change to: background-color: transparent; */
+    }
+  </style>
+</head>
+
+<body translate="no">
+
+  <div id="output"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const output = document.getElementById("output");
+
+    if (params.has("style")) {
+      output.style.cssText += params.get("style");
+    }
+    if (params.has("bodyStyle")) {
+      document.body.style.cssText += params.get("bodyStyle");
+    }
+
+    const formatString = params.get("format") || 'DD/MM/YYYY HH:mm:ss';
+
+    function updateClock() {
+      output.innerText = dayjs().format(formatString);
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>
